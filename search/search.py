@@ -88,7 +88,28 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    from util import Stack
+
+    stack = Stack()
+    visited = set()
+
+    #push (state, path) tuple
+    start_state = problem.getStartState()
+    stack.push((start_state, []))
+
+    while not stack.isEmpty():
+        state, actions = stack.pop()
+
+        if problem.isGoalState(state):
+            return actions
+
+        if state not in visited:
+            visited.add(state)
+
+            for successor, action, _ in problem.getSuccessors(state):
+                if successor not in visited:
+                    stack.push((successor, actions + [action]))
+    return []
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
@@ -119,7 +140,30 @@ def breadthFirstSearch(problem):
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    
+    from util import PriorityQueue
+
+    pq = PriorityQueue()
+    visited = {}
+
+    start_state = problem.getStartState()
+    pq.push((start_state, [], 0), 0)
+
+    while not pq.isEmpty():
+        state, actions, cost_so_far = pq.pop()
+
+        if problem.isGoalState(state):
+            return actions
+
+        if state in visited and visited[state] <= cost_so_far:
+            continue
+        visited[state] = cost_so_far
+
+        for successor, action, stepCost in problem.getSuccessors(state):
+            new_cost = cost_so_far + stepCost
+            pq.push((successor, actions + [action], new_cost), new_cost)
+    
+    return []
 
 def nullHeuristic(state, problem=None):
     """
