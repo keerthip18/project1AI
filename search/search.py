@@ -114,10 +114,6 @@ def breadthFirstSearch(problem):
                 new_path = current_path + [action]
                 to_explore.push( (successor, new_path) )
         # current_state, path = to_explore.pop() 
-        
-    
-
-    
     util.raiseNotDefined()
     
 def uniformCostSearch(problem):
