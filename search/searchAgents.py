@@ -470,7 +470,25 @@ def foodHeuristic(state, problem):
     """
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
-    return 0
+    foodList = foodGrid.asList()
+
+    if not foodList:
+        return 0
+
+    # Distance from Pacman to closest food
+    pacman_to_food = min(
+        util.manhattanDistance(position, food)
+        for food in foodList
+    )
+
+    # Maximum distance between any two food dots
+    max_food_distance = 0
+    for i in range(len(foodList)):
+        for j in range(i + 1, len(foodList)):
+            dist = util.manhattanDistance(foodList[i], foodList[j])
+            max_food_distance = max(max_food_distance, dist)
+
+    return pacman_to_food + max_food_distance
 
 class ClosestDotSearchAgent(SearchAgent):
     "Search for all food using a sequence of searches"
