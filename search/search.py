@@ -127,15 +127,18 @@ def breadthFirstSearch(problem):
         popped_item = to_explore.pop()
         current_state = popped_item[0]
         current_path = popped_item[1]
+        
         if problem.isGoalState(current_state):
             return current_path
         visited.add(current_state)
+        
         for successor, action, stepCost in problem.getSuccessors(current_state): 
             if successor not in visited:
                 new_path = current_path + [action]
                 to_explore.push( (successor, new_path) )
         # current_state, path = to_explore.pop() 
-    util.raiseNotDefined()
+    
+    return []
     
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
