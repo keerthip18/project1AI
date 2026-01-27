@@ -87,7 +87,28 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    from util import Stack
+
+    stack = Stack()
+    visited = set()
+
+    #push (state, path) tuple
+    start_state = problem.getStartState()
+    stack.push((start_state, []))
+
+    while not stack.isEmpty():
+        state, actions = stack.pop()
+
+        if problem.isGoalState(state):
+            return actions
+
+        if state not in visited:
+            visited.add(state)
+
+            for successor, action, _ in problem.getSuccessors(state):
+                if successor not in visited:
+                    stack.push((successor, actions + [action]))
+    return []
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
