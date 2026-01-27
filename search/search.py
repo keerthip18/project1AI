@@ -17,6 +17,7 @@ In search.py, you will implement generic search algorithms which are called by
 Pacman agents (in searchAgents.py).
 """
 
+import queue
 import util
 
 class SearchProblem:
@@ -92,8 +93,33 @@ def depthFirstSearch(problem):
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    # taking the start and making a queue 
+    problem_start = problem.getStartState()
+    to_explore = util.Queue()
+    to_explore.push( (problem_start, []) )
+    
+    #tracking visited nodes
+    visited = set()
+    
+    # main BFS loop 
+    while not to_explore.isEmpty():
+        popped_item = to_explore.pop()
+        current_state = popped_item[0]
+        current_path = popped_item[1]
+        if problem.isGoalState(current_state):
+            return current_path
+        visited.add(current_state)
+        for successor, action, stepCost in problem.getSuccessors(current_state): 
+            if successor not in visited:
+                new_path = current_path + [action]
+                to_explore.push( (successor, new_path) )
+        # current_state, path = to_explore.pop() 
+        
+    
 
+    
+    util.raiseNotDefined()
+    
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
