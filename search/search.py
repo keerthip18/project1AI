@@ -114,30 +114,26 @@ def depthFirstSearch(problem):
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    # taking the start and making a queue 
-    problem_start = problem.getStartState()
-    to_explore = util.Queue()
-    to_explore.push( (problem_start, []) )
-    
-    #tracking visited nodes
+    from util import Queue
+
+    queue = Queue()
     visited = set()
-    
-    # main BFS loop 
-    while not to_explore.isEmpty():
-        popped_item = to_explore.pop()
-        current_state = popped_item[0]
-        current_path = popped_item[1]
-        
-        if problem.isGoalState(current_state):
-            return current_path
-        visited.add(current_state)
-        
-        for successor, action, stepCost in problem.getSuccessors(current_state): 
-            if successor not in visited:
-                new_path = current_path + [action]
-                to_explore.push( (successor, new_path) )
-        # current_state, path = to_explore.pop() 
-    
+
+    start_state = problem.getStartState()
+    queue.push((start_state, []))
+
+    while not queue.isEmpty():
+        state, actions = queue.pop()
+
+        if problem.isGoalState(state):
+            return actions
+
+        if state not in visited:
+            visited.add(state)
+
+            for successor, action, _ in problem.getSuccessors(state):
+                if successor not in visited:
+                    queue.push((successor, actions + [action]))
     return []
     
 def uniformCostSearch(problem):
