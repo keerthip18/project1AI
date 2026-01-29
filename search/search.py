@@ -12,7 +12,7 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 '''
-We used AI tools to assist with understanding concepts and debugging code.
+We used AI tools to assist with understanding concepts and debugging code.  
 '''
 
 """
